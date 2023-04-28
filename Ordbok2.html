@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Ordbok</title>
+    <link rel="stylesheet" href="Ordbok2.css">
+  </head>
+  <body>
+    <h1>Multilingo</h1>
+    <h3>Norwegian, English, and Spanish</h3>
+    <div class="container">
+      <div class="flag-container">
+        <label>
+          <input type="radio" name="lang" value="no">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Flag_of_Norway.png/320px-Flag_of_Norway.png" alt="">
+        </label>
+        <label>
+          <input type="radio" name="lang" value="en">
+          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/800px-Flag_of_the_United_Kingdom.svg.png" alt="">
+        </label>
+        <label>
+          <input type="radio" name="lang" value="es">
+          <img src="https://media.snl.no/media/18428/standard_spania.gif" alt="">
+        </label>
+      </div>
+      <div class="search-container">
+        <input type="text" id="search-input" placeholder="Enter a word">
+        <button id="search-btn">Oversett</button>
+      </div>
+      <div class="output-container">
+        <div class="output-card">
+          <div id="output-text"></div>
+        </div>
+
+        <div class="output-card">
+          <div id="search-history"></div>
+          <style>
+            body{ color: rgb(255, 255, 255);}
+          </style>
+        </div>
+      </div>
+      
+      <p>
+
+
+    
+        <button style="color: rgb(119, 0, 0);" onclick="insertChar('á')">á</button> <!-- Koden oppretter en knapp for å sette inn bokstaven "á". -->
+        <button style="color: rgb(119, 0, 0);" onclick="insertChar('é')">é</button> <!-- Koden oppretter en knapp for å sette inn bokstaven "é". -->
+        <button style="color: rgb(119, 0, 0);" onclick="insertChar('í')">í</button> <!-- Koden oppretter en knapp for å sette inn bokstaven "í". -->
+        <button style="color: rgb(119, 0, 0);" onclick="insertChar('ó')">ó</button> <!-- Koden oppretter en knapp for å sette inn bokstaven "ó". -->
+        <button style="color: rgb(119, 0, 0);" onclick="insertChar('ñ')">ñ</button> <!-- Koden oppretter en knapp for å sette inn bokstaven "ñ". -->
+        <button style="color: rgb(119, 0, 0);" onclick="insertChar('ú')">ú</button> <!-- Koden oppretter en knapp for å sette inn bokstaven "ú". -->
+        <button style="color: rgb(119, 0, 0);" onclick="insertChar('ü')">ü</button> <!-- Koden oppretter en knapp for å sette inn bokstaven "ü". -->
+        <button style="color: rgb(119, 0, 0);" onclick="insertChar('æ')">æ</button> <!-- Koden oppretter en knapp for å sette inn bokstaven "æ". -->
+        <button style="color: rgb(119, 0, 0);" onclick="insertChar('ø')">ø</button> <!-- Koden oppretter en knapp for å sette inn bokstaven "ø". -->
+        <button style="color: rgb(119, 0, 0);" onclick="insertChar('å')">å</button> <!-- Koden oppretter en knapp for å sette inn bokstaven "å". -->
+      </p>
+    
+
+      <div class="button-container">
+        <button class="clear-refresh-button" onclick="clearLocalStorageAndRefresh()">Tøm Søkehistorie og Tøm localStorage</button>
+        <button class="clear-input-button" onclick="clearInput()">Tøm søkefeltet</button>
+      </div>
+
+    </div>
+    
+    <!-- Koden nedenfor er en JavaScript-blokk for å legge til funksjonalitet i nettsiden. -->
+    <script>
+
+    
+    const searchBtn = document.getElementById('search-btn');
+    const searchInput = document.getElementById('search-input');
+    const searchHistoryKey = 'search-history';
+    
+  // Add an event listener to the search input field to listen for the "keydown" event.
+  searchInput.addEventListener('keydown', (event) => {
+    // Check if the key pressed was the "Enter" key.
+    if (event.key === 'Enter') {
+      const word = searchInput.value.trim();
+      if (!word) return;
+      const sourceLang = document.querySelector('input[name="lang"]:checked').value;
+      window.open(`oversettelse.html?word=${encodeURIComponent(word)}&sourceLang=${sourceLang}`, '_self');
+      addSearchToHistory(word);
+      clearInput();
+    }
+  });
+
+  // Add an event listener to the search input field to listen for the "click" event.
+  searchInput.addEventListener('click', () => {
+    const searchHistory = getSearchHistory();
+    if (searchHistory.length > 0) {
+      const outputText = searchHistory.join(', ');
+      document.getElementById('output-text').innerText = `Search history: ${outputText}`;
+    }
+  });
+
+  // Legger til en hendelse for å starte oversettelsesprosessen når "Oversett"-knappen klikkes.
+  searchBtn.addEventListener('click', () => {
+    const word = searchInput.value.trim();
+    if (!word) return;
+    const sourceLang = document.querySelector('input[name="lang"]:checked').value;
+    window.open(`oversettelse.html?word=${encodeURIComponent(word)}&sourceLang=${sourceLang}`, '_self');
+    addSearchToHistory(word);
+    clearInput();
+  });
+
+      function insertChar(character) {
+        // Henter tekstfeltet.
+        const input = document.getElementById('search-input');
+        
+        // Legger til tegnet på riktig plass i tekstfeltet.
+        const start = input.selectionStart;
+        const end = input.selectionEnd;
+        input.value = input.value.substring(0, start) + character + input.value.substring(end);
+        
+        // Flytter markøren fremover slik at den står etter det nye tegnet.
+        input.selectionStart = input.selectionEnd = start + 1;
+      }
+      
+      function clearInput() {
+        document.getElementById('search-input').value = '';
+        document.getElementById('output-text').innerText = '';
+      }
+
+      function clearLocalStorageAndRefresh() {
+    localStorage.clear();
+    location.reload();
+  }
+
+
+      function addSearchToHistory(word) {
+      const searchHistory = getSearchHistory();
+      if (!searchHistory.includes(word)) {
+        searchHistory.unshift(word);
+        localStorage.setItem(searchHistoryKey, JSON.stringify(searchHistory));
+        updateSearchHistory();
+      }
+    }
+
+    function updateSearchHistory() {
+    const searchHistory = getSearchHistory();
+    const outputHistory = document.querySelector('.search-history-list');
+    if (searchHistory.length > 0) {
+      const outputText = searchHistory.join(', ');
+      outputHistory.innerHTML = '';
+      searchHistory.forEach(function(search) {
+        const li = document.createElement('li');
+        li.innerText = search;
+        li.addEventListener('click', function() {
+          // handle click event here
+        });
+        outputHistory.appendChild(li);
+      });
+    } else {
+      outputHistory.innerHTML = '';
+    }
+  }
+
+
+    function getSearchHistory() {
+      const searchHistoryString = localStorage.getItem(searchHistoryKey);
+      const searchHistorySet = searchHistoryString ? new Set(JSON.parse(searchHistoryString)) : new Set();
+      return [...searchHistorySet];
+    }
+
+
+
+  </script>
+
+  </body>
+  </html>
+

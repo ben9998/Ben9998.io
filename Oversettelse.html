@@ -1,0 +1,49 @@
+  <html lang="en"> 
+    <head>
+      <meta charset="UTF-8">
+      <title>Oversettelse</title>
+      <link rel="stylesheet" href="Oversettelse.css"> <!-- Koden henter stilark fra en ekstern CSS-fil. -->
+    </head>
+    
+    <body>
+      <h1>Oversettelse</h1> <!-- Koden inneholder en overskrift som vises på siden. -->
+      <div id="output"></div> <!-- Koden oppretter et tomt div-element med id "output" som vil bli brukt til å vise oversettelsene på siden. -->
+      <br>
+      <button class="button-go-back">Go back</button> <!-- Koden oppretter en knapp med klassenavn "button-go-back" som lar brukeren gå tilbake til forrige side. -->
+    
+    <script>
+  const urlParams = new URLSearchParams(window.location.search); // Koden henter parameterne fra URL-en og lagrer dem i variabler.
+  const word = urlParams.get('word');
+  const sourceLang = urlParams.get('sourceLang');
+  const langCodes = { // Koden oppretter et objekt som inneholder en liste over språkkoder for hvert støttet språk.
+    no: ['en', 'es'],
+    en: ['no', 'es'],
+    es: ['no', 'en']
+  };
+
+  const targetLangs = langCodes[sourceLang]; // Koden velger de to målspråkene basert på koden til kildespråket.
+
+  const output = document.getElementById('output'); // Koden henter referansen til div-elementet med id "output".
+  output.innerHTML = ''; // Koden tømmer div-elementet for å fjerne eventuelle tidligere oversettelser.
+
+  const apiKey = 'AIzaSyAD7dQHiMc0gx-GsgNU84rXsN99QsIcmrQ'; // Koden bruker en API-nøkkel fra Google Cloud for å koble til Cloud Translation API.
+
+  targetLangs.forEach(lang => { // Koden går gjennom begge målspråkene og oversetter ordet til hvert av dem ved hjelp av API-en.
+    const url = `https://translation.googleapis.com/language/translate/v2?key=${apiKey}&q=${word}&source=${sourceLang}&target=${lang}`;
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        const translation = data.data.translations[0].translatedText; // Koden henter oversettelsen fra API-responsen.
+        output.innerHTML += `<p><strong>${lang.toUpperCase()}:</strong> ${translation}</p>`; // Koden legger til oversettelsen på siden.
+      })
+      .catch(() => {
+        output.innerHTML += `<p>No translation found for "${word}" in ${lang}.</p>`; // Koden håndterer tilfeller der det ikke finnes noen oversettelse for ordet i det aktuelle språket.
+      });
+  });
+
+  const goBackButton = document.querySelector('.button-go-back');
+  goBackButton.addEventListener('click', () => {
+    window.location.href = 'Ordbok2.html';
+  });
+
+  </script> </body> </html>

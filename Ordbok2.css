@@ -1,0 +1,191 @@
+/* Set body margin and font family */
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background: #7f78f9;
+  }
+  
+  /* Style the h1 and h3 headers */
+  h1 {
+    color: #1a1a1a; 
+    font-size: 3rem;
+    text-align: center;
+    margin-top: 5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: 0.2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+  
+  h3 {
+    color: #1a1a1a;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 5rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    letter-spacing: 0.1rem;
+    font-weight: 700;
+  }
+  
+  /* Style the container */
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Style the flag container */
+  .flag-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3rem;
+  }
+  
+  /* Style the label and input elements */
+  label {
+    margin: 0 2rem;
+    cursor: pointer;
+    text-align: center;
+    font-size: 1.5rem;
+    color: #1a1a1a;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    font-weight: 600;
+  }
+  
+  input[type="radio"] {
+    display: none;
+  }
+  
+  /* Style the image */
+  img {
+    width: 10rem;
+    height: 6rem;
+    border: 2px solid #ddd;
+    border-radius: 0.8rem;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Style the checked image */
+  input[type="radio"]:checked + img {
+    border-color: #1a1a1a;
+    box-shadow: 0 0 1rem rgba(26, 26, 26, 0.2);
+    transform: scale(1.2);
+  }
+  
+  /* Style the search container */
+  .search-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5rem;
+  }
+  
+  .search-container input[type="text"] {
+    padding: 1.5rem;
+    border: none;
+    border-radius: 2.5rem;
+    width: 40rem;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+    font-size: 2rem;
+    margin-right: 1.5rem;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .search-container input[type="text"]::placeholder {
+    color: #ddd;
+    font-weight: 600;
+  }
+  
+  /* Style the search button */
+  .search-container button {
+    padding: 1.5rem 3rem;
+    background-color: #9c9bff;
+    color: #fff;
+    border: none;
+    border-radius: 2.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    font-size: 1.5rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    font-weight: 600;
+  }
+  
+  /* Position the search button */
+  .search-container button {
+    position: relative;
+    left: -1rem;
+  }
+  
+  /* Hover effects */
+  img:hover {
+    transform: scale(1.1);
+  }
+  
+  .search-container input[type="text"]:focus,
+  .search-container button:focus {
+    outline: none;
+    box-shadow: 0 0 1rem rgba(108, 99, 255, 0.5);
+  }
+  
+  /* Customizations for a cool look */
+  .flag-container img {
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+  }
+  
+  .search-container button:hover {
+    background-color: #7d73ff;
+    box-shadow: 0 0 1rem rgba(108, 99, 255, 0.5);
+  }
+  
+
+  .search-history-container {
+    margin-top: 10px;
+  }
+  
+  #search-history-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  #search-history-list li {
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+  
+  #search-history-list li:hover {
+    text-decoration: underline;
+  }
+  
+
+  #output-history {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  
+  #output-history:before {
+    content: "Søkehistorikk: ";
+    font-weight: bold;
+  }
+  
+  #output-history ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 14px;
+  }
+  
+  #output-history li {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+
+
